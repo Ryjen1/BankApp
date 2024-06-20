@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Accounts</title>
+</head>
+<body>
+<h1>Accounts</h1>
+<a href="/accounts/new">Create New Account</a>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Account Number</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Balance</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="account : ${accounts}">
+        <td th:text="${account.accountNumber}"></td>
+        <td th:text="${account.firstName}"></td>
+        <td th:text="${account.lastName}"></td>
+        <td th:text="${account.balance}"></td>
+        <td>
+            <a th:href="@{/accounts/edit/{accountNumber}(accountNumber=${account.accountNumber})}">Edit</a> |
+            <a th:href="@{/accounts/delete/{accountNumber}(accountNumber=${account.accountNumber})}">Delete</a> |
+            <form th:action="@{/accounts/deposit/{accountNumber}(accountNumber=${account.accountNumber})}" method="post" style="display:inline;">
+                <input type="number" name="amount" placeholder="Deposit Amount">
+                <button type="submit">Deposit</button>
+            </form> |
+            <form th:action="@{/accounts/withdraw/{accountNumber}(accountNumber=${account.accountNumber})}" method="post" style="display:inline;">
+                <input type="number" name="amount" placeholder="Withdraw Amount">
+                <button type="submit">Withdraw</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
